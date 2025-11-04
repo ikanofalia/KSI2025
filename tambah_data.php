@@ -1,21 +1,25 @@
 <?php
-include 'koneksi.php';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "db_latihan";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
+// Membuat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $sql = "INSERT INTO pengguna (nama, email) VALUES ('$nama', '$email')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Data berhasil ditambahkan!";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
 }
-?>
 
-<form method="POST" action="">
-    Nama: <input type="text" name="nama" required><br>
-    Email: <input type="email" name="email" required><br>
-    <input type="submit" value="Tambah Data">
-</form>
+// Contoh menambahkan data ke tabel "siswa"
+$sql = "INSERT INTO siswa (nama, umur) VALUES ('Nofalia', 20)";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Data berhasil ditambahkan!";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
+?>
